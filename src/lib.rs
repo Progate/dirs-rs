@@ -25,21 +25,21 @@ mod mac;
 #[cfg(any(target_os = "macos", target_os = "ios"))]
 use mac as sys;
 
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", not(target_vendor = "browseros")))]
 mod wasm;
-#[cfg(target_arch = "wasm32")]
+#[cfg(all(target_arch = "wasm32", not(target_vendor = "browseros")))]
 use wasm as sys;
 
 #[cfg(not(any(
     target_os = "windows",
     target_os = "macos", target_os = "ios",
-    target_arch = "wasm32"
+    all(target_arch = "wasm32", not(target_vendor = "browseros"))
 )))]
 mod lin;
 #[cfg(not(any(
     target_os = "windows",
     target_os = "macos", target_os = "ios",
-    target_arch = "wasm32"
+    all(target_arch = "wasm32", not(target_vendor = "browseros"))
 )))]
 use lin as sys;
 
